@@ -1,6 +1,6 @@
 ﻿namespace EKartBL
 {
-    // Now responsible only for coordinating the steps
+    // Coordinates steps; still "new"s concrete implementations (DIP later)
     public class CheckoutService
     {
         private readonly EkartRepository _repository;
@@ -12,8 +12,11 @@
         {
             _repository = repository;
 
-            // Still creating dependencies directly (DIP violation kept for later)
-            _orderCalculator = new OrderCalculator();
+            // OCP: we can swap these strategies without changing OrderCalculator
+            ITaxCalculator taxCalculator = new IndiaGstTaxCalculator();
+            IDiscountPolicy discountPolicy = new LoyaltyDiscountPolicy();
+
+            _orderCalculator = new OrderCalculator(taxCalculator, discountPolicy);
             _paymentProcessor = new PaymentProcessor();
             _invoicePrinter = new InvoicePrinter();
         }
@@ -23,7 +26,7 @@
             // 1. Calculate all totals
             _orderCalculator.CalculateTotals(order);
 
-            // 2. Save order
+            // 2. Save
             _repository.SaveOrder(order);
 
             // 3. Charge payment
@@ -32,7 +35,7 @@
             // 4. Print invoice
             _invoicePrinter.Print(order);
 
-            // 5. Log completion
+            // 5. Log
             _repository.Log("Order processed successfully: " + order.Id);
         }
     }

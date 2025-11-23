@@ -8,8 +8,8 @@ namespace EKartApp
     internal class Program
     {
         static void Main(string[] args)
-        {            
-            Console.WriteLine("=== EKart Checkout Demo (Stage 2 - SRP: split responsibilities) ===");
+        {
+            Console.WriteLine("=== EKart Checkout Demo (Stage 3 - OCP: tax & discount strategies) ===");
 
 
             // Create sample data
