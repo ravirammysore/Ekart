@@ -1,4 +1,6 @@
-﻿namespace EKartBL
+﻿using EKartBL;
+
+namespace EKartBL
 {
     // Coordinates steps; still "new"s concrete implementations (DIP later)
     public class CheckoutService

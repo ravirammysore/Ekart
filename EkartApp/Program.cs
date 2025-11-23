@@ -9,7 +9,7 @@ namespace EKartApp
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("=== EKart Checkout Demo (Stage 3 - OCP: tax & discount strategies) ===");
+            Console.WriteLine("=== EKart Checkout Demo (Stage 4 - Restructuring the code with folders) ===");
 
 
             // Create sample data
