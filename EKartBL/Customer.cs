@@ -1,4 +1,4 @@
-﻿namespace EKartApp
+﻿namespace EKartBL
 {
     public class Customer
     {

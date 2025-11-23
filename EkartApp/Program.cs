@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using EKartBL;
+
 namespace EKartApp
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("=== EKart Checkout Demo (Stage 0 - Ugly but Working) ===");
+            Console.WriteLine("=== EKart Checkout Demo (Stage 1 - Still Ugly, still working, but added business layer) ===");
 
             // Create sample data
             var customer = new Customer

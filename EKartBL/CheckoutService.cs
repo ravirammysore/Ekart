@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EKartApp
+namespace EKartBL
 {
     // One big service that does "everything" (violates SRP, OCP, DIP, etc.)
     public class CheckoutService

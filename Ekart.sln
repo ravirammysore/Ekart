@@ -5,6 +5,8 @@ VisualStudioVersion = 17.14.36518.9 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EkartApp", "EkartApp\EkartApp.csproj", "{AF9DE855-ABFB-471F-A1CC-F643C051EEC6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EKartBL", "EKartBL\EKartBL.csproj", "{F7472EBE-5CD7-4B80-9A63-10D85E0CD143}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{AF9DE855-ABFB-471F-A1CC-F643C051EEC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF9DE855-ABFB-471F-A1CC-F643C051EEC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF9DE855-ABFB-471F-A1CC-F643C051EEC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7472EBE-5CD7-4B80-9A63-10D85E0CD143}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7472EBE-5CD7-4B80-9A63-10D85E0CD143}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7472EBE-5CD7-4B80-9A63-10D85E0CD143}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7472EBE-5CD7-4B80-9A63-10D85E0CD143}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

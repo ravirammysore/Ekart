@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace EKartApp
+namespace EKartBL
 {
     public class Order
     {

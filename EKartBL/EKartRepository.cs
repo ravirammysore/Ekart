@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace EKartApp
+namespace EKartBL
 {
     // A "god" repository class that does too much (for SRP & ISP discussion later)
     public class EkartRepository
