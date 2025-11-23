@@ -49,7 +49,7 @@ namespace EKartApp
 
             #endregion
 
-            #region Place on order for demo
+            #region Place an order
 
             var customer = new Customer
             {
