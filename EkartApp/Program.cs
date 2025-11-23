@@ -7,8 +7,8 @@ namespace EKartApp
     internal class Program
     {
         static void Main(string[] args)
-        {
-            Console.WriteLine("=== EKart Checkout Demo (Stage 5 - FAT IEkartRepository interface, before ISP) ===");
+        {            
+            Console.WriteLine("=== EKart Checkout Demo (Stage 6 - ISP: repository vs logger split) ===");
 
             var customer = new Customer
             {
@@ -30,6 +30,16 @@ namespace EKartApp
             IEkartRepository repo = new EkartRepository();
             repo.SeedProducts();
 
+            /*Similarly, we can swap different logger implementations later if needed, like log to a cloudservice or slack or something!, this will be the only place to change that in the entire app
+             * 
+             * Example:
+             * ILogger logger = new CloudLogger();
+             * Or
+             * ILogger logger = new SlackLogger();
+             */
+            ILogger logger = new ConsoleLogger();
+            
+
             var order = new Order
             {
                 Id = 1001,
@@ -43,7 +53,7 @@ namespace EKartApp
             order.OrderLines.Add(new OrderLine { Product = product1, Quantity = 2 });
             order.OrderLines.Add(new OrderLine { Product = product2, Quantity = 1 });
 
-            var checkoutService = new CheckoutService(repo);
+            var checkoutService = new CheckoutService(repo,logger);
             checkoutService.ProcessOrder(order);
 
             Console.WriteLine();

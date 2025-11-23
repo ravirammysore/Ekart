@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace EKartBL
 {
-    // A "god" repository class that does too much (for SRP & ISP discussion later)
+    // Now: only data access related implementations inside this class!
     public class EkartRepository: IEkartRepository
     {
         // In-memory "database"
@@ -39,13 +39,8 @@ namespace EKartBL
             Console.WriteLine();
             Console.WriteLine("Order saved in in-memory repository. Current order count: " + _orders.Count);
         }
-
-        // Completely unrelated, but stuffed into the same class
-        public void Log(string message)
-        {
-            Console.WriteLine("[LOG] " + message);
-        }
-
+        
+        //**this is also a candidate for removal from this class, but keeping the demo simple for now!**
         public void ExportOrdersToCsv(string filePath)
         {
             // Not implemented – just a placeholder

@@ -4,17 +4,19 @@ namespace EKartBL
 {
     // Coordinates steps; still "new"s concrete implementations (DIP later)
 
-    /*Notice that we are now using IEkartRepository instead of EkartRepository directly! This gives us flexibility to swap different repository implementations in the future!
-     * But does CheckoutService need to know about all the methods in IEkartRepository? (ISP discussion later)
+    /*Notice that we are now using IEkartRepository instead of EkartRepository directly! This gives us flexibility to swap different repository implementations in the future!     
      */
     public class CheckoutService
     {
+        //notice that we have two separate dependencies now
         private readonly IEkartRepository _repository;
+        private readonly ILogger _logger;
+
         private readonly OrderCalculator _orderCalculator;
         private readonly PaymentProcessor _paymentProcessor;
         private readonly InvoicePrinter _invoicePrinter;
 
-        public CheckoutService(IEkartRepository repository)
+        public CheckoutService(IEkartRepository repository, ILogger logger  )
         {
             _repository = repository;
 
@@ -25,6 +27,7 @@ namespace EKartBL
             _orderCalculator = new OrderCalculator(taxCalculator, discountPolicy);
             _paymentProcessor = new PaymentProcessor();
             _invoicePrinter = new InvoicePrinter();
+            _logger = logger;
         }
 
         public void ProcessOrder(Order order)
@@ -42,7 +45,7 @@ namespace EKartBL
             _invoicePrinter.Print(order);
 
             // 5. Log
-            _repository.Log("Order processed successfully: " + order.Id);
+            _logger.Log("Order processed successfully: " + order.Id);
         }
     }
 }
