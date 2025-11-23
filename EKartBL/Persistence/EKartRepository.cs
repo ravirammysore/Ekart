@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace EKartBL
 {
     // A "god" repository class that does too much (for SRP & ISP discussion later)
-    public class EkartRepository
+    public class EkartRepository: IEkartRepository
     {
         // In-memory "database"
         private readonly List<Product> _products = new List<Product>();

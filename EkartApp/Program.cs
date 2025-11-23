@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using EKartBL;
 
 namespace EKartApp
@@ -9,23 +8,28 @@ namespace EKartApp
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("=== EKart Checkout Demo (Stage 4 - Restructuring the code with folders) ===");
+            Console.WriteLine("=== EKart Checkout Demo (Stage 5 - FAT IEkartRepository interface, before ISP) ===");
 
-
-            // Create sample data
             var customer = new Customer
             {
                 Id = 1,
                 Name = "Ravi Ram",
-                LoyaltyLevel = "Premium" // or "Regular"
+                LoyaltyLevel = "Premium"
             };
 
-            var repo = new EkartRepository();
+            /*Using the interface type now*
+              
+            In case we want to switch to a different repository implementation later, this will be the only change needed in the entire application!
 
-            // Simulate products stored somewhere
+            Example: 
+                IEkartRepository repo = new SqlEkartRepository();
+            or
+                IEkartRepository repo = new OrcaleEkartRepository();
+            */
+
+            IEkartRepository repo = new EkartRepository();
             repo.SeedProducts();
 
-            // Build order
             var order = new Order
             {
                 Id = 1001,
@@ -33,21 +37,11 @@ namespace EKartApp
                 OrderLines = new List<OrderLine>()
             };
 
-            // Customer buys 2 units of Product 1 and 1 unit of Product 2
             var product1 = repo.GetProductById(1);
             var product2 = repo.GetProductById(2);
 
-            order.OrderLines.Add(new OrderLine
-            {
-                Product = product1,
-                Quantity = 2
-            });
-
-            order.OrderLines.Add(new OrderLine
-            {
-                Product = product2,
-                Quantity = 1
-            });
+            order.OrderLines.Add(new OrderLine { Product = product1, Quantity = 2 });
+            order.OrderLines.Add(new OrderLine { Product = product2, Quantity = 1 });
 
             var checkoutService = new CheckoutService(repo);
             checkoutService.ProcessOrder(order);

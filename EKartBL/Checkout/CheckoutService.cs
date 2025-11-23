@@ -3,14 +3,18 @@
 namespace EKartBL
 {
     // Coordinates steps; still "new"s concrete implementations (DIP later)
+
+    /*Notice that we are now using IEkartRepository instead of EkartRepository directly! This gives us flexibility to swap different repository implementations in the future!
+     * But does CheckoutService need to know about all the methods in IEkartRepository? (ISP discussion later)
+     */
     public class CheckoutService
     {
-        private readonly EkartRepository _repository;
+        private readonly IEkartRepository _repository;
         private readonly OrderCalculator _orderCalculator;
         private readonly PaymentProcessor _paymentProcessor;
         private readonly InvoicePrinter _invoicePrinter;
 
-        public CheckoutService(EkartRepository repository)
+        public CheckoutService(IEkartRepository repository)
         {
             _repository = repository;
 
