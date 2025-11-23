@@ -7,8 +7,49 @@ namespace EKartApp
     internal class Program
     {
         static void Main(string[] args)
-        {            
-            Console.WriteLine("=== EKart Checkout Demo (Stage 6 - ISP: repository vs logger split) ===");
+        {
+            Console.WriteLine("=== EKart Checkout Demo (Stage 7 - DIP: manual wiring in Program) ===");
+
+            #region Configurations and dependency wirings
+            
+            // Low-level dependencies
+            var repository = new EkartRepository();
+            var logger = new ConsoleLogger();
+
+            IEkartRepository repo = repository;
+            ILogger log = logger;
+
+            repo.SeedProducts();
+
+            /*Pricing strategies
+             * Can be easily swapped here to change behavior
+             * say to a different country's tax rules or a different discount policy!
+             * Nothing else in the system needs to change!
+             */
+            ITaxCalculator taxCalculator = new IndiaGstTaxCalculator();
+            IDiscountPolicy discountPolicy = new LoyaltyDiscountPolicy();
+
+            IOrderCalculator orderCalculator = new OrderCalculator(taxCalculator, discountPolicy);
+
+            /* Other services
+             * Depending on the requirements, we can create abstractions for these too, but keeping it simple for now
+             */
+            var paymentProcessor = new PaymentProcessor();
+            var invoicePrinter = new InvoicePrinter();
+
+            /*High-level policy depends on abstractions, all wired here
+             * It also becomes easy to test the system with fakes or mocks for unit testing!
+             */
+            var checkoutService = new CheckoutService(
+                repo,
+                log,
+                orderCalculator,
+                paymentProcessor,
+                invoicePrinter);
+
+            #endregion
+
+            #region Place on order for demo
 
             var customer = new Customer
             {
@@ -16,29 +57,6 @@ namespace EKartApp
                 Name = "Ravi Ram",
                 LoyaltyLevel = "Premium"
             };
-
-            /*Using the interface type now*
-              
-            In case we want to switch to a different repository implementation later, this will be the only change needed in the entire application!
-
-            Example: 
-                IEkartRepository repo = new SqlEkartRepository();
-            or
-                IEkartRepository repo = new OrcaleEkartRepository();
-            */
-
-            IEkartRepository repo = new EkartRepository();
-            repo.SeedProducts();
-
-            /*Similarly, we can swap different logger implementations later if needed, like log to a cloudservice or slack or something!, this will be the only place to change that in the entire app
-             * 
-             * Example:
-             * ILogger logger = new CloudLogger();
-             * Or
-             * ILogger logger = new SlackLogger();
-             */
-            ILogger logger = new ConsoleLogger();
-            
 
             var order = new Order
             {
@@ -53,10 +71,11 @@ namespace EKartApp
             order.OrderLines.Add(new OrderLine { Product = product1, Quantity = 2 });
             order.OrderLines.Add(new OrderLine { Product = product2, Quantity = 1 });
 
-            var checkoutService = new CheckoutService(repo,logger);
             checkoutService.ProcessOrder(order);
 
-            Console.WriteLine();
+            Console.WriteLine(); 
+            #endregion
+
             Console.WriteLine("Press any key to exit...");
             Console.ReadKey();
         }

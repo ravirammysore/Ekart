@@ -1,7 +1,7 @@
 ﻿namespace EKartBL
 {
     // Now delegates tax & discount to strategy interfaces (OCP)
-    public class OrderCalculator
+    public class OrderCalculator : IOrderCalculator
     {
         private readonly ITaxCalculator _taxCalculator;
         private readonly IDiscountPolicy _discountPolicy;
